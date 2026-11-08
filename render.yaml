@@ -1,0 +1,17 @@
+# One-click deploy on Render (render.com): New + > Blueprint > pick this repo.
+# The disk keeps accounts, ratings and saved games between deploys. Disks need a paid instance.
+services:
+  - type: web
+    name: chess-online
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: TRUST_PROXY
+        value: "1"
+      - key: DB_PATH
+        value: /data/chess.db
+    disk:
+      name: chess-data
+      mountPath: /data
+      sizeGB: 1
