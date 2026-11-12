@@ -1,9 +1,4 @@
 'use strict';
-/*
-  Chess backend: user accounts, SQLite database, in-memory cache, daily login streak.
-  No npm dependencies. Needs Node.js 22.13 or newer (uses the built-in node:sqlite).
-  Run:  node server.js     then open  http://localhost:3000
-*/
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -21,7 +16,6 @@ const AVATARS = ['♞','♟','♛','♚','♜','♝','🦊','🐼','🦁','🐯'
 const COLORS = ['#81b64c','#5c8bb0','#e0a030','#d9534f','#9b59b6','#e67e9a','#2bb5a0','#7f8c8d'];
 const PRESENCE_TTL = 75 * 1000;               // no heartbeat for this long means offline
 
-/* ---------- cache: small TTL + LRU map ---------- */
 class TTLCache {
   constructor(max = 5000, now = Date.now) { this.m = new Map(); this.max = max; this.now = now; }
   get(k) {
