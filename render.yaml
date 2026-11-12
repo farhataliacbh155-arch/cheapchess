@@ -1,4 +1,3 @@
-# The disk keeps accounts, ratings and saved games between deploys. Disks need a paid instance.
 services:
   - type: web
     name: chess-online
