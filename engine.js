@@ -1,8 +1,5 @@
 'use strict';
-/*
-  Chess rules used by the server to check every online move and decide results.
-  Copied from Chess.html so both sides agree exactly. If you change the rules in the page, change them here too.
-*/
+
 const START="rnbqkbnrpppppppp................................PPPPPPPPRNBQKBNR".split("").map(c=>c==="."?"":c);
 const N=[[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
 const K=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
