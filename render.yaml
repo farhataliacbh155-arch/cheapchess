@@ -1,4 +1,3 @@
-# One-click deploy on Render (render.com): New + > Blueprint > pick this repo.
 # The disk keeps accounts, ratings and saved games between deploys. Disks need a paid instance.
 services:
   - type: web
