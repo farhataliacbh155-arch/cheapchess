@@ -1,0 +1,2 @@
+# SQLite works out of the box. psycopg enables Neon/PostgreSQL when DATABASE_URL is set.
+psycopg[binary]>=3.2,<4
