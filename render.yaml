@@ -2,7 +2,7 @@
 # in Render after creating a Neon database to enable persistent PostgreSQL.
 services:
   - type: web
-    name: chess-online
+    name: cheapchess
     runtime: docker
     plan: free
     healthCheckPath: /api/health
