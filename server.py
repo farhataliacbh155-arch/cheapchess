@@ -158,6 +158,9 @@ class App:
                 db.execute("ALTER TABLE users ADD COLUMN " + n + " " + d)
 
         self.mp = Multiplayer(db, self.now, self.lock, self.send, self.fail, self.cors, abandon_ms)
+        # Widen legacy PostgreSQL timestamp columns after every table exists.
+        # This also repairs databases created by earlier INTEGER-based builds.
+        db.migrate_timestamp_columns()
         app = self
 
         class Handler(BaseHTTPRequestHandler):

@@ -44,10 +44,31 @@ class Database:
         if self.is_postgres:
             # SQLite's INTEGER PRIMARY KEY auto-generates IDs; use BIGSERIAL in PostgreSQL.
             script = re.sub(r"\bid\s+INTEGER\s+PRIMARY\s+KEY\b", "id BIGSERIAL PRIMARY KEY", script, flags=re.I)
-            script = re.sub(r"\b(user_id|white_id|black_id)\s+INTEGER\b", r"\1 BIGINT", script, flags=re.I)
+            # Python stores Unix timestamps in milliseconds (~1.8e12), which
+            # exceed PostgreSQL INTEGER. BIGINT is safe for timestamps and counters.
+            script = re.sub(r"\bINTEGER\b", "BIGINT", script, flags=re.I)
         for statement in script.split(";"):
             if statement.strip():
                 self.execute(statement)
+
+    def migrate_timestamp_columns(self):
+        """Widen timestamp columns in existing PostgreSQL installations.
+
+        CREATE TABLE IF NOT EXISTS does not change columns in an existing
+        Neon database, so explicitly migrate the columns used for millisecond
+        Unix timestamps. Safe to run on every startup.
+        """
+        if not self.is_postgres:
+            return
+        columns = {
+            "users": ("created_at", "last_seen"),
+            "sessions": ("created_at", "expires_at"),
+            "kv": ("updated_at",),
+            "games": ("started_at", "ended_at"),
+        }
+        for table, names in columns.items():
+            for name in names:
+                self.execute(f"ALTER TABLE {table} ALTER COLUMN {name} TYPE BIGINT")
 
     def user_columns(self):
         if self.is_postgres:
