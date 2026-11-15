@@ -1,0 +1,13 @@
+# Free first-stage deployment. SQLite at /tmp is temporary; set DATABASE_URL
+# in Render after creating a Neon database to enable persistent PostgreSQL.
+services:
+  - type: web
+    name: chess-online
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: TRUST_PROXY
+        value: "1"
+      - key: DB_PATH
+        value: /tmp/chess.db
