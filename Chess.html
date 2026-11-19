@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/png" href="LOGO.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cheapchess</title>
+<title>Chess</title>
 <style>
 :root{--bg:#f1efe9;--pn:#fff;--tx:#222;--mu:#777;--bd:#ddd;--s:min(92vw,70vh,640px);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#302e2b;--pn:#262421;--tx:#f0f0f0;--mu:#a09d98;--bd:#3d3a37}}
@@ -244,6 +243,19 @@ button.a.p{background:#81b64c;border-color:#81b64c;color:#fff}
 .anx>summary{padding:10px 12px;font-weight:700;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .anx>summary small{color:var(--mu);font-weight:500;font-size:12px}
 .anx[open]>summary{border-bottom:1px solid var(--bd)}
+.chat .cbd{background:#ca3431;color:#fff;border-radius:10px;padding:0 7px;font-size:11px;margin-left:7px;font-weight:700}
+.chbody{padding:10px;display:flex;flex-direction:column;gap:8px}
+.chl{display:flex;flex-direction:column;gap:6px;max-height:190px;min-height:44px;overflow-y:auto;padding:2px}
+.cm{align-self:flex-start;max-width:88%;padding:7px 10px;border-radius:12px;font-size:14px;line-height:1.35;background:var(--bg);border:1px solid var(--bd);word-break:break-word;overflow-wrap:anywhere}
+.cm b{display:block;font-size:11px;color:var(--mu);font-weight:700;margin-bottom:1px}
+.cm.me{align-self:flex-end;background:#81b64c;border-color:#81b64c;color:#fff}
+.chn{color:var(--mu);font-size:13px;text-align:center;padding:10px 4px}
+.chq{display:flex;flex-wrap:wrap;gap:6px}
+.chq button{border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:999px;padding:5px 10px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.chq button:disabled,.chi input:disabled{opacity:.5;cursor:not-allowed}
+.chi{display:flex;gap:6px}
+.chi input{flex:1;min-width:0;padding:9px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit;font-size:16px}
+.chfoot{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--mu);font-size:11.5px}
 .anx>.card{margin:10px}
 
 /* ---- main menu + online play ---- */
@@ -523,6 +535,26 @@ body.homeopen #topbar{background:#262522}
 .opline .om.d{color:var(--mu);font-weight:600}
 .opline .om.q{color:var(--mu);opacity:.55;font-weight:400;letter-spacing:.1em}
 .opline .om.n{background:#81b64c;color:#fff;opacity:1}
+/* ---- Learn: compact rows, one page at a time ---- */
+@media(max-width:700px){body.lrlist #bcol,body.lrlist #side>.sh,body.lrlist #st,body.lrlist #sg{display:none}body.lrlist .app{padding-top:8px}}
+#t-lr .lhero{padding:10px 12px;gap:10px}
+#t-lr .lhero .hico{width:36px;height:36px;font-size:19px;border-radius:10px}
+#t-lr .lhero .prog{margin-top:6px}
+.chips.scroll{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-right:-2px}
+.chips.scroll::-webkit-scrollbar{display:none}
+#t-lr .chips,#t-lr .lst,#t-lr .pager,#t-lr .opsearch,#t-lr .lhero{flex-shrink:0}
+.chips.scroll button{flex:none;padding:6px 11px}
+.lst.dense{gap:6px}
+.lst.dense .lc{grid-template-columns:38px minmax(0,1fr) auto;gap:10px;padding:7px 10px;border-radius:12px}
+.lst.dense .lt{width:38px;height:38px;border-radius:10px;font-size:20px}
+.lst.dense .lt.eco{font-size:12px;font-weight:800;letter-spacing:.2px}
+.lst.dense .lb{min-width:0}
+.lst.dense .lb b{display:block;font-size:14px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lst.dense .ls{font-size:12px;line-height:1.3;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lst.dense .ls em{font-style:normal;font-weight:700;margin-right:6px}
+.lst.dense .lx{grid-column:1/-1;font-size:13px;line-height:1.45;color:var(--tx);padding:2px 2px 4px}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;color:var(--mu);font-size:12.5px;font-weight:600}
+.pager .a:disabled{opacity:.4;cursor:not-allowed}
 .opsearch{width:100%;box-sizing:border-box;padding:11px 14px;margin:8px 0 2px;border-radius:12px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font:inherit}
 .opsearch:focus{outline:2px solid #81b64c;outline-offset:0}
 .lt.eco{font-size:13px;font-weight:800;letter-spacing:.02em;color:#fff}
@@ -634,7 +666,8 @@ body.homeopen #topbar{background:#262522}
   </div>
 </nav>
 <nav id="bnav" aria-label="Main menu">
-  <button data-go="play" class="on"><i data-ic="bolt"></i><span>Play</span></button>
+  <button data-go="menu" class="on"><i data-ic="home"></i><span>Menu</span></button>
+  <button data-go="play"><i data-ic="bolt"></i><span>Play</span></button>
   <button data-go="pz"><i data-ic="puzzle"></i><span>Puzzles</span></button>
   <button data-go="lr"><i data-ic="cap"></i><span>Learn</span></button>
   <button data-go="gm"><i data-ic="folder"></i><span>Games</span></button>
@@ -678,7 +711,7 @@ body.homeopen #topbar{background:#262522}
 </div>
 </div>
 <div class="app">
-  <div>
+  <div id="bcol">
     <div class="pl" id="pt"></div>
     <div class="bw"><div id="bd"></div><svg id="ar" viewBox="0 0 8 8"></svg><div id="pr" hidden></div></div>
     <div class="pl" id="pb"></div>
@@ -706,6 +739,15 @@ body.homeopen #topbar{background:#262522}
         <div class="dprompt" id="onp" hidden><span>Opponent offers a draw</span><button class="a p sm" id="onpa">Accept</button><button class="a sm" id="onpd">Decline</button></div>
       </div>
       <div id="one" hidden><div class="res" id="onres"></div><div class="ctl"><button class="a p" id="onn">⚡ New match</button><button class="a" id="ona">🔎 Analyze</button><button class="a" id="onh">🏠 Menu</button></div></div>
+      <details class="anx chat" id="chat" hidden>
+        <summary><span>💬 Chat<b class="cbd" id="chb" hidden></b></span><small id="chs"></small></summary>
+        <div class="chbody">
+          <div class="chl" id="chl" aria-live="polite"></div>
+          <div class="chq" id="chq"></div>
+          <div class="chi"><input id="chx" maxlength="200" autocomplete="off" enterkeyhint="send"><button class="a p sm" id="chn">Send</button></div>
+          <div class="chfoot"><span id="chh">Be kind — keep it friendly.</span><button class="a sm" id="chmu" hidden>Mute</button></div>
+        </div>
+      </details>
       <div id="ml"></div>
       <div class="nav"><button class="a" id="n0" title="Start">⏮</button><button class="a" id="n1" title="Back">◀</button><button class="a" id="n2" title="Forward">▶</button><button class="a" id="n3" title="End">⏭</button><button class="a" id="n4">Auto</button></div>
       <div class="bar"><button class="a p" id="ng">New game</button><button class="a" id="un">Undo</button></div>
@@ -767,10 +809,11 @@ body.homeopen #topbar{background:#262522}
         <div class="res" id="opm"></div>
         <button class="a p big" id="opx2" hidden style="margin-top:10px">Next line ▶</button>
       </div>
-      <div class="chips" id="lnf"><button data-f="all" class="on">All</button><button data-f="q">♛ Queen</button><button data-f="r">♜ Rook</button><button data-f="b">♝ Bishop</button><button data-f="n">♞ Knight</button><button data-f="p">♟ Pawn</button><button data-f="k">♚ King</button></div>
-      <div class="chips" id="opf" hidden></div>
+      <div class="chips scroll" id="lnf"><button data-f="all" class="on">All</button><button data-f="q">♛ Queen</button><button data-f="r">♜ Rook</button><button data-f="b">♝ Bishop</button><button data-f="n">♞ Knight</button><button data-f="p">♟ Pawn</button><button data-f="k">♚ King</button></div>
+      <div class="chips scroll" id="opf" hidden></div>
       <input class="opsearch" id="ops" type="search" placeholder="Search a name, ECO code or move…" autocomplete="off" hidden>
-      <div class="lst" id="lnl"></div>
+      <div class="lst dense" id="lnl"></div>
+      <div class="pager" id="lnpg" hidden><button class="a sm" id="lnpv">‹ Prev</button><span id="lnpn"></span><button class="a sm" id="lnnx">Next ›</button></div>
     </section>
     <section class="pane" id="t-su">
       <div id="pp" hidden>
@@ -2319,7 +2362,7 @@ const key=s=>{
 };
 const cpu=()=>$("md").value==="cpu";
 
-function newGame(s){if(NET.game&&NET.game.status==="ended")NET.game=null;MAIN=null;VQ.length=0;gid++;pzOn=false;PZ=null;lnOn=false;LN=null;if(ed){ed=false;$("pp").hidden=true;showTab("play")}clearInterval(auto);auto=null;S=s||{b:START.slice(),t:"w",c:"KQkq",ep:-1,hm:0};H=[];vi=0;RV=null;hint=null;sel=null;last=null;over=null;busy=false;upd()}
+function newGame(s){if(NET.game&&NET.game.status==="ended")NET.game=null;chatOnNew(s);MAIN=null;VQ.length=0;gid++;pzOn=false;PZ=null;lnOn=false;LN=null;if(ed){ed=false;$("pp").hidden=true;showTab("play")}clearInterval(auto);auto=null;S=s||{b:START.slice(),t:"w",c:"KQkq",ep:-1,hm:0};H=[];vi=0;RV=null;hint=null;sel=null;last=null;over=null;busy=false;upd()}
 function upd(){
   LM=legal(S);over=null;
   if(!LM.length)over=inCheck(S,S.t)?(S.t==="w"?"Black":"White")+" wins by checkmate":"Draw by stalemate";
@@ -2382,7 +2425,7 @@ function askPromo(ms){
   }
 }
 function render(){
-  $("pr").hidden=true;
+  lrLayout();$("pr").hidden=true;
   const bd=$("bd");bd.innerHTML="";
   const live=vi===H.length&&!ed,VS=ed?{b:EB,t:$("tn").value,c:"",ep:-1,hm:0}:(vi<H.length?H[vi].s:S),lm=vi>0&&!ed?H[vi-1].m:null,tg=sel!==null&&!ed?(live?LM:(canBranch()?legal(VS):[])).filter(m=>m.from===sel).map(m=>m.to):[];
   const kc=!ed&&inCheck(VS,VS.t)?VS.b.indexOf(VS.t==="w"?"K":"k"):-1;
@@ -2866,16 +2909,18 @@ function showTab(n){
   if(n==="su"&&!ed&&guard()){showTab("play");return}
   if((n==="su")!==ed)togglePos();
   const pn=$("t-"+n);if(pn&&$("anx").parentNode!==pn)pn.appendChild($("anx"));
+  chatPaint();lrLayout();
 }
 function syncUi(){
   const m=$("md").value;
   document.querySelectorAll("#sg button").forEach(b=>b.classList.toggle("on",b.dataset.m===m));
   $("sub").textContent=NET.game?"Online · "+(NET.game.label||"game"):m==="cpu"?"You play White vs the engine":"Two players, one screen";
+  chatPaint();
 }
 document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>showTab(b.dataset.t));
 document.querySelectorAll("#sg button").forEach(b=>b.onclick=()=>{$("md").value=b.dataset.m;$("md").dispatchEvent(new Event("change"))});
 const PZS=[["rnbqkb1r/pp5n/2pp4/5p2/6P1/5P2/PPPPP2P/R1BQKB1R b KQkq g3",1],["rnbqkb1r/pp5n/2pp4/8/6P1/8/PPPPP2P/R1BQKB1R b KQkq -",1],["4r3/8/1kn5/4p3/8/3P1qPN/r7/4K3 b - -",1],["Q7/5k2/2B5/5K2/3RPN2/8/8/8 w - -",1],["8/4k3/2B5/3Q1K2/3RPN2/8/8/8 w - -",1],["rn4k1/2p5/8/p1P1BB2/Q7/8/4PK1P/R4R2 w - -",1],["8/8/pp6/1b6/3k2r1/PK6/P7/5q2 b - -",1],["8/3b4/8/pP6/3k2r1/8/q7/4K3 b - -",1],["rnbqkbn1/ppppp3/8/8/2r5/8/PPQPPP2/RNB1KB2 w Qq -",1],["2bqkb1r/3pp2p/1pp5/5Pp1/4P3/3P4/R1P4P/1NBQKBNR w Kk g6",1],["2bqkb1r/3pp3/1pp4p/5PB1/4P3/3P4/R1P4P/1N1QKBNR w Kk -",1],["4k3/7Q/1p6/2bP3p/8/8/R1P4P/4KBNR w K -",1],["8/8/7k/2RP1Q1P/2B5/2P2R2/3K4/8 w - -",1],["r1b1k3/p1p2p2/p3p3/6B1/3QP3/b7/PP3K1R/R7 w q -",1],["r1b1k3/p1p5/p4Q2/4p1B1/4P3/P7/P4K1R/R7 w q -",1],["2bqkb2/2ppp3/5n2/1p3Q2/N7/6P1/PP1PPP2/1RB1KB2 w - b6",1],["4k2r/3pp2p/7b/1P2q3/2P4P/3p4/4N1P1/1N2K2R b Kk -",1],["8/4k3/5n2/8/3rbp2/8/5K2/2q5 b - -",1],["8/4k3/3q4/3n4/3rb3/5p1K/8/8 b - -",1],["8/8/3k3K/3n1q2/1r2b3/5p2/8/8 b - -",1],["1k6/3R4/7p/5R1P/8/p3K3/P7/8 w - -",1],["6k1/8/8/3R1N2/2BQN2P/8/4K3/8 w - -",1],["6k1/3BQ3/8/6P1/1P1R3P/2R5/1P1P4/2B1K3 w - -",1],["8/3n4/8/2r5/3n2rp/2k5/8/3K4 b - -",1],["8/8/1r2k3/3bb2p/p1pn3q/8/8/5K2 b - -",1],["r2qkbnr/pbpnp2p/1p6/6p1/P7/6P1/1PP2P1P/1NBQKBNR w Kkq -",1],["rnb3n1/3k1p2/p3p3/2b3q1/8/2P4P/P3PP2/RN2KBR1 b Q -",1],["rnb1kb2/pp2ppp1/8/7r/8/2Qp1P2/P1PB4/4KB2 w q -",1],["8/1Q6/3k4/6R1/2PP3p/1N2P3/3BN3/3K4 w - -",1],["8/1Q6/3k4/6R1/2PPP3/1N5p/3BN3/3K4 w - -",1],["3k4/8/8/1QN2R2/2PP4/8/2KBN3/8 w - -",1],["rn2kbnr/2pp1pp1/7p/p5q1/P4p2/2P4P/1P1PP3/RNBQK1Nb b Qkq a3",1],["rn2k2r/p1pb1ppp/4p3/8/1P2n1Pq/8/P1PPNP2/RNBQK3 b Qkq -",1],["1n6/1p3p1R/8/3k3P/1K6/r3r3/8/8 b - -",1],["1n6/1p3R2/8/3k3P/1K6/r1r5/8/8 b - -",1],["8/1p3R2/2n5/1K1k3P/8/r1r5/8/8 b - -",1],["8/1R6/2n5/1K1k3P/2r5/r7/8/8 b - -",1],["5k2/8/4P1Q1/2K5/1P2P2P/8/8/8 w - -",1],["2k4r/6p1/p2Q1n2/2p4p/P1P2B1P/8/4P3/4KBNR w K -",1],["4k3/2p4p/p2b4/4p3/r7/8/5r2/3K4 b - -",1],["8/8/5pk1/2b1p3/2pq4/p7/8/7K b - -",1],["3k4/4b3/8/3K1p2/6q1/p3p3/8/8 b - -",1],["2k4r/5pp1/1P1b4/p2b1P2/6n1/2P5/1P2P3/6K1 b - -",1],["7r/3k1pp1/1P1b4/p2b1P2/6n1/2P1P3/1P6/6K1 b - -",1],["8/1P1k1ppr/3b4/p2b1P2/6n1/2P1P3/1P6/6K1 b - -",1],["rnbqkbn1/p2pp1p1/5p2/1p6/P3P3/8/1PPPBPPR/R1B1K1N1 w Qq -",2],["3qr3/8/1kn2P2/4p3/8/3P1PPN/r7/4K3 b - -",2],["4r3/8/1kn2q2/4p3/8/3P1PPN/r7/5K2 b - -",2],["8/7k/2B5/3Q4/3RPNK1/8/8/8 w - -",2],["4B3/6k1/8/3Q4/3RPNK1/8/8/8 w - -",2],["5r2/4k3/8/2P2B2/8/2Q5/4PK1P/3R1R2 w - -",2],["6Q1/k7/2R5/8/PB6/2PK1P2/4N3/8 w - -",2],["8/3k4/3B4/P7/2P5/3KQP2/4N3/8 w - -",2],["8/3b1q2/1p6/p7/3k2r1/P7/P7/4K3 b - -",2],["8/3b1q2/8/pp6/P2k2r1/8/P7/4K3 b - -",2],["4kb2/7r/1p6/3P1Q1p/8/8/R1P4P/4KBNR w K -",2],["8/4k3/8/1B1P3Q/8/2P5/R6P/4K1R1 w - -",2],["8/8/6k1/3PQ3/2B4P/2P1R3/R2K4/8 w - -",2],["8/8/6k1/R2PQ3/2B4P/2P1R3/8/1K6 w - -",2],["3k2n1/8/8/p1r1np2/1r1b4/8/3K4/8 b - -",2],["3k4/8/8/p1r1np2/2rbn3/8/8/3K4 b - -",2],["3k4/8/8/p1r1n3/2rbnp2/8/4K3/8 b - -",2],["3k4/8/8/p3n3/2rbnp2/1r6/6K1/8 b - -",2],["8/8/3k4/p1n1n3/2rb4/5p1K/8/1r6 b - -",2],["2b1k3/3p4/2p2q2/8/pR4P1/8/P2PPP2/4KB2 b - -",2],["8/4k3/3q4/3n4/1r2b1K1/5p2/8/8 b - -",2],["8/8/4q3/3nk3/1r2b2K/5p2/8/8 b - -",2],["2k5/5R2/7p/7P/p7/8/P3K3/R7 w - -",2],["8/5k2/3Q4/3R1N1p/7P/2NK4/2B5/8 w - -",2],["4k1nr/5p1p/2p5/4n3/P3P3/2P4P/2P3qP/2B1K3 b k e3",2],["7Q/5k2/8/4p3/1P5P/3R2P1/1P1PB3/R1B3K1 w - -",2],["8/8/7k/4Q3/1P5P/1R1R2P1/1P1PB3/2B2K2 w - -",2],["4k3/5ppr/2p4n/Q7/5pP1/3P4/1P1N1P2/R3K1N1 w Q -",2],["4k3/1ppb4/5p2/5r2/2q5/4P3/8/3K4 b - -",2],["4k3/1p1b4/4rp2/1qp5/8/2K5/8/8 b - -",2],["4k3/1p1b4/5p2/1qp1r3/8/8/3K4/8 b - -",2],["8/3b1k2/1p3p2/1qp1r3/8/8/3K4/8 b - -",2],["8/3b4/1p1k4/1qp5/4rp2/8/3K4/8 b - -",2],["8/8/1p1k4/1bp5/1q1r1p2/8/8/2K5 b - -",2],["1n5r/r6p/5n2/6p1/3k4/2N4P/2qP1PP1/4KR2 b - -",2],["1n5r/r6p/5n2/6p1/7P/2k5/5PP1/4KR2 b - -",2],["1n5r/r6p/5n2/8/7p/2k5/5PP1/4K2R b - -",2],["2r5/r2n3p/8/8/4nP2/2k5/6P1/4K3 b - f3",2],["8/3n3p/8/5P2/1rr5/2k3n1/8/4K3 b - -",2],["8/3n3p/8/5n2/1rr5/2k5/8/3K4 b - -",2],["8/3n4/8/5n1p/1r1r4/2k5/4K3/8 b - -",2],["8/3n4/4r3/8/3n3p/3kr3/K7/8 b - -",2],["8/3n4/8/8/3n1r1p/3kr3/K7/8 b - -",2],["8/8/8/4n3/3nkr1p/4r3/K7/8 b - -",2],["8/8/8/4nk2/3n1r1p/4r3/1K6/8 b - -",2],["4Q3/2k5/8/2K5/7P/p7/P2B4/8 w - -",3],["7r/3kp1bp/2nq4/5b2/3Nn2P/8/5PP1/4KB2 b - -",3],["7r/3kp1bp/3q4/5b2/3nn2P/8/4BPP1/4K3 b - -",3],["2r5/3k3p/3q3P/4p3/3bb3/8/6P1/4K3 b - -",3],["8/4kp1p/7P/2b1nP2/2p5/8/2K5/5q2 b - -",3],["8/4kp1p/7P/2b1nq2/2p5/2K5/8/8 b - -",3],["8/4k2p/7q/2b1np2/2p5/8/4K3/8 b - -",3],["3r4/2p5/p3k3/8/7p/K3p2r/8/8 b - -",3],["2b1k3/1p1p4/r3pq2/2P4r/8/P2pK3/8/RN6 b - -",3],["8/p7/p2q4/8/2nr1k2/8/5K2/8 b - -",3],["8/8/1k6/3Q3P/4P3/P7/3KB1P1/R1B1R3 w - -",3],["2k5/8/8/1B2Q2P/4P3/P7/RB1K2P1/4R3 w - -",3],["8/8/1k6/1B2Q2P/4P3/P1B1R3/R2K2P1/8 w - -",3],["8/8/8/4kp2/3p4/2p2K2/1q6/2r5 b - -",3],["8/5q2/n2k1np1/2b3K1/8/3p4/8/8 b - -",3],["2b1kb1r/4pppp/8/3Q4/4P3/7P/R3P3/4KB1R w K -",3],["4Q3/1k6/4K3/1B6/5P2/8/p7/6N1 w - -",3],["6n1/3k4/5p2/1p2Q3/1b1N4/5P2/8/3K1B2 w - -",3],["r7/p2n4/4pNp1/1Pk1p3/8/R4P2/8/3QK3 w - -",3],["8/1P6/3k4/8/2P2P1Q/3P4/3K4/8 w - -",3],["8/8/3b2K1/1r2kn2/3qb3/2p5/8/8 b - -",3],["7B/8/3k3p/5Q2/p1B2P2/P7/6PP/R3K1NR w KQ -",3],["8/4k3/5p2/RB3P2/P7/1P6/3B4/2KR4 w - -",3],["4k3/2pq4/p1n5/5p2/8/8/3pK3/8 b - -",3],["8/3q4/p3k3/2p5/1n3p2/8/1K6/8 b - -",3],["8/3q4/p7/2p2k2/1n3p2/2K5/8/8 b - -",3],["8/8/2p1b1p1/7k/8/3K4/3b4/q7 b - -",3],["8/3k4/p2p1p2/8/p2r1q2/2K1n3/8/8 b - -",3],["8/3k4/p2p1p2/8/p2r2q1/4n3/1K6/8 b - -",3],["8/8/p2k1p2/3p4/p3r3/4n1q1/1K6/8 b - -",3],["1n2k3/2B4r/8/7p/1b6/7q/5K2/R7 b - -",3],["1n6/2r1k3/8/3R3p/1b6/7q/5K2/8 b - -",3],["3k4/5P2/8/P7/2N4p/2R1K2P/7P/5R2 w - -",3],["8/P7/2k5/8/2NRK2p/2R4P/7P/8 w - -",3],["8/4k3/p7/b5q1/3K2np/8/8/8 b - -",3],["4kb2/5p1r/rp6/4p3/8/4KP2/4N3/1q6 b - -",3],["5b1r/7p/3k4/p1pPp3/6B1/P2P4/5P1P/1Q2K2R w K -",3],["8/2k5/4P3/2P5/1p2Q1P1/2N1B3/2PK4/8 w - -",3],["4kb1r/2p1pp1p/7p/8/3q2Q1/1P6/5P1P/4KB1R w Kk -",3],["8/5k2/4N3/3Q4/1P6/3K1B2/3BP3/8 w - -",3],["3k4/3N4/8/3Q4/1P6/3KPB2/3B4/8 w - -",3],["1r6/pp3k2/8/2K1Q3/6p1/P7/P7/3R1B2 w - -",3],["8/p5k1/3Q4/1BK5/8/P5p1/P7/3R4 w - -",3],["8/3k4/8/6P1/3BB3/3Q1KR1/8/8 w - -",3],["8/8/4k3/4B1P1/4B3/3Q1KR1/8/8 w - -",3],["4qb2/3kp3/B7/8/P5K1/8/2rB4/1R1Q4 w - -",4],["4q3/3kp1b1/B7/8/P5K1/8/2QB4/1R6 w - -",4],["8/4kp1p/7P/2b1nP2/2p5/8/5p2/2K5 b - -",4],["2b1k3/1p1p4/r3p3/2P4r/8/P2K4/8/qN6 b - -",4],["2Q5/8/1R5p/3k3q/1P6/8/2K5/8 w - -",4],["8/2k5/8/3Q3P/4P3/P7/R2KB1P1/2B1R3 w - -",4],["8/1k6/8/1B2Q2P/4P3/P1B5/R2K2P1/4R3 w - -",4],["2bqk3/3p1p2/4p3/p7/1b2P1PP/1P6/P4KB1/3r4 b - -",4],["8/8/n2k1np1/2b5/8/3p2K1/8/1q6 b - -",4],["8/8/3k4/6R1/2P5/5R2/3K3P/2B5 w - -",4],["2b5/1r2b3/7K/2p1k3/3n4/1p6/8/8 b - -",4],["2Q4B/5k2/7p/ppp2p2/8/P7/5PPP/R3KBNR w KQ -",4],["8/8/2k2p2/5P2/P3R3/1P1RB3/2K5/8 w - -",4],["8/1k6/8/2K1RP2/P3R1p1/1P6/8/8 w - -",4],["4k3/2p5/p3q3/8/1n3p2/8/8/2K5 b - -",4],["r3k1n1/p4p2/1p1p4/4r3/4P2P/2q2PP1/P6b/3K4 b q -",4],["r3k1n1/p4p2/1p1p4/8/4P2P/2q3P1/P6b/3K4 b q -",4],["r3k1n1/p4p2/1p1p4/8/P3P2P/6q1/7b/3K4 b q a3",4],["r3k1n1/p4p2/1p1p4/8/P3q3/8/7b/3K4 b q -",4],["8/4k3/3N4/2N1P3/1P6/R5K1/8/8 w - -",4],["8/4k3/4p3/1p2qp2/8/3b4/5K2/8 b - -",4],["4k3/8/4q3/3bpp2/1p5K/8/8/8 b - -",4],["4k1n1/3p4/3b2p1/p3p3/1n6/5KP1/2q5/8 b - -",4],["8/5k2/3R4/p2K1P2/P3R2N/7B/4P3/8 w - -",4],["8/2p2k2/8/2Q4p/8/4P3/1BP1R3/4K3 w - -",4],["2b1k3/2pp1p1r/1p6/6q1/3bP1P1/3B4/2P5/3K4 b - -",4],["8/p4k2/8/2P2pP1/8/P3KN2/R7/1N1Q4 w - -",4],["6k1/8/8/p1P2pP1/8/P1NK1N2/4R3/4Q3 w - -",4],["6k1/8/8/pNP3P1/5p2/P2K1N2/4R3/4Q3 w - -",4],["8/8/2P3k1/1N1QR1P1/P7/3K1N2/8/8 w - -",4],["5bn1/p1q4r/4k1p1/3p4/Pp6/RP3P2/4P1P1/1N2KBN1 b - -",4],["5bn1/p1q4r/4k1p1/3p4/P7/NP3P2/4P1P1/4KBN1 b - -",4],["4kb2/5p1r/rp1p4/4P3/8/4K3/4NP2/1q6 b - -",4],["4kb1r/p6p/7p/3BP2P/8/8/PPP3P1/RN1QK2R w KQ -",4],["4k1r1/7p/p6p/2bBP2P/2P3P1/8/PP6/RN1QK2R w KQ -",4],["1r2k3/pp6/8/2K1n3/6p1/P3Q3/P7/3R1B2 w - -",4],["8/3k4/8/6P1/3BB3/5KR1/1Q6/8 w - -",4],["8/8/3k4/7P/P2N4/2P5/3K2R1/4R3 w - -",4],["4kbn1/2B1p3/4b3/8/p7/3Q4/1P4PR/1N2K3 w - -",4],["4kbn1/2B1p3/4b3/8/8/p1NQ4/1P4PR/4K3 w - -",4],["8/4k3/8/5QP1/5B2/P1N5/4K3/8 w - -",4],["8/5k2/8/3p1p2/3P1B2/6K1/8/3QR3 w - -",4],["6n1/3kp3/8/3pq3/3r4/5P2/5P2/2K2B2 b - -",4],["3k4/3pbp2/R2p1np1/8/1R3P2/6P1/2PPP3/3QKB2 w - -",4],["8/1k6/5N2/8/P2Q4/2K3P1/8/2B3N1 w - -",4],["r1bqkbnr/n1ppp3/5ppp/p6Q/4PP2/pPPB4/R2P1KPP/1NB3NR w kq - 0 1",1],["r1bqkbnr/n1ppp3/5p1p/Q7/4Pp2/BPPB4/R2P1KPP/1N4NR w kq - 0 1",1],["r1bq1k1r/pp1n1p1Q/n1p1p3/6N1/3P2P1/PPp5/4PP1P/RN2KB1R w KQ - 0 1",1],["rnb2Q2/pp4p1/2kpp3/1Np3Pr/P7/2P3P1/RP1PP3/2B1KBN1 w - - 3 1",1],["rnb2knr/1ppp1p1R/3b4/p3p3/4Pp2/1Q4P1/PPPP1NP1/RNB1KB2 w Q - 1 1",1],["2b2k1r/p2Q1ppp/p7/8/1b2p1nP/2p5/PPN3P1/R1B1K1N1 w - - 1 1",1],["2b2k1r/p4ppp/p6n/8/1b2p2P/2pQ4/PPN3P1/R1B1K1N1 w - - 3 1",1],["2b2k1r/p4ppp/7n/p7/1b2p2P/2pQ4/PPN2KP1/R1B3N1 w - - 0 1",1],["R1bqkb2/3nn1p1/1p3P2/6N1/2P1P3/4P3/1p6/1N2KB2 w - - 1 1",1],["5b2/2p1pk2/7Q/3qpn1p/2P1P3/N7/8/4BBRK w - - 0 1",1],["r1bqk3/pnpN4/3b4/5Q2/p2P4/2n1B2P/1P2NR2/2R1K3 w - - 1 1",1],["r1bqk3/pnp5/3b4/4NQ2/3P4/p1n1B2P/1P2NR2/2R1K3 w - - 0 1",1],["r1bqk3/pnp5/3b4/4NQ2/3P4/P3B2P/4nR2/2R1K3 w - - 0 1",1],["r1b2rk1/Npp1pp1p/p7/6N1/PP3Pn1/R7/1bQKP1PP/2B2B1R w - - 1 1",1],["r1N2rk1/1pp1pp1p/p7/6N1/PP1b1Pn1/R7/2QKP1PP/2B2B1R w - - 1 1",1],["2r2rk1/1pp1pp1p/p7/6N1/PP1b1Pn1/R7/1BQKP1PP/5B1R w - - 0 1",1],["1n3knr/4ppb1/p2N2pp/3Q4/5Pb1/4K2B/PPP1P2P/R1B3NR w - - 2 1",1],["rnbq1bnr/2p1p1pp/8/pN2N3/3Pk3/8/PP3PPP/R1BQKB1R w KQ - 0 1",1],["1n3k2/1B4rp/7b/3p4/2P5/3P4/r4P2/3K4 b - - 0 1",1],["r3k2r/4pn2/p1p3p1/4P2p/2qP2bP/8/PPP2PP1/1RB1K2R b kq - 2 1",1],["2r1k3/2p1r3/2Pp4/4pP2/Np2P1p1/1B4q1/1R6/5K1R w - - 2 1",1],["rnbqk3/p1pppp2/8/1p1Pb1Q1/1P4B1/8/P1PP1P1P/RNB1K1NR w KQq - 1 1",1],["rnbqk3/p1pppp2/8/1p1P1BQ1/1P3b2/8/P1PP1P1P/RNB1K1NR w KQq - 3 1",1],["rnbqk3/p2ppp2/8/1ppP2Q1/1P3b2/7B/P1PP1P1P/RNB1K1NR w KQq c6 0 1",1],["rnbqk3/p2ppp2/8/1pPP2Q1/8/7B/P1P1KP1P/RNb3NR w q - 0 1",1],["rnbqk3/p2ppp2/8/1pPP2Q1/P7/7B/2PbKP1P/RN4NR w q - 1 1",1],["r1b2Qnr/1p1p1p2/5k2/4p1pp/2B5/4P3/qP1P1PPP/R1BK2NR w - - 1 1",1],["1rbk4/p1pp1p2/1b6/2n1R3/3P4/1Pp3R1/6K1/6N1 w - - 1 1",1],["2bqkbnr/rpppp2p/p4p2/3n2p1/2P1P3/3B3N/PP1P1PPP/RNBQKR2 w Qk - 4 1",1],["2bqkbnr/rp1pp2p/p1p2p2/3P2p1/4P3/3B3N/PP1P1PPP/RNBQKR2 w Qk - 0 1",1],["2bqkbnr/rp1pp2p/p4p2/2pP2p1/4P3/7N/PP1PBPPP/RNBQKR2 w Qk - 0 1",1],["r3kbr1/2p1p3/1p3ppn/1n2P3/PPb4P/R1N3P1/3P1P2/2B1K1Nq b q - 1 1",1],["2b1r3/1p1k4/1P1br3/7p/1P5P/8/6P1/3N3K b - - 0 1",1],["2b3r1/1p1k4/1P1br3/7p/1P5P/8/1N4P1/7K b - - 2 1",1],["2Qnkb2/4pprp/BR6/p4P2/P5p1/2P4P/6P1/2B1K1NR w - - 2 1",1],["r2k2nr/p5pp/np3p2/3p4/1b1P2qP/PP2K1P1/1BP2P2/R7 b - - 2 1",1],["r2k2nr/p5pp/1p3p2/2np4/1b1P2qP/PP2K1P1/1BP2P2/3R4 b - - 4 1",1],["r2k3r/p5pp/1p3p1n/2np4/1b1q3P/PP3KP1/1BP2P2/2R5 b - - 1 1",1],["2bk1bR1/1ppp4/8/p7/3PQ3/PPNPP2r/8/1RB2K2 w - - 0 1",1],["rn4nN/p5p1/7p/kP6/Pbp5/4B2R/1P2PKP1/RN1Q1B2 w - - 5 1",1],["r1bq2nr/1p6/4pp1p/pBp2kpP/PQ6/5N2/1PPP1PP1/RNBK4 w - - 2 1",1],["1Qbk1b1r/1p6/4pp2/2n3p1/6P1/P1N1P1Q1/2P3P1/R1B3K1 w - - 0 1",2],["2k2b1r/7p/1P6/6PR/4p3/2B5/3RB3/3K2N1 w - - 2 1",2],["4k3/r2p2b1/1R6/p2NpP2/8/P4K1N/3P1P1P/7R w - - 1 1",2],["r2qkbnr/p3ppp1/n3P3/2p5/1p1P4/4P1pN/PP2QP1P/RNB1KB1R w KQkq - 0 1",2],["r2qkbn1/p3ppp1/n3P3/2p5/1p1P4/N3P1pr/PP2QP1P/R1B1KB1R w KQq - 0 1",2],["4kb2/p3p1p1/2r1B2n/4q3/Q6R/NP2PPP1/P7/R1B1K3 w - - 1 1",2],["1n1q1b1r/1ppkppp1/r3b2n/p2p3p/3K4/NPPPP2N/P3BPPP/R1BQ3R b - - 0 1",2],["1n1q1b1r/1pp1ppp1/rN2k2n/p2p3p/3K4/1PPPP2b/P3BPPP/R1BQ3R b - - 3 1",2],["5k1r/p2p2pQ/2pKp3/4n2p/1p6/7N/1P5P/5BR1 w - - 0 1",2],["rnb3R1/ppp3Q1/4k3/3p3r/2B5/4PK2/PB4P1/1N4N1 w - - 4 1",2],["2r5/3k4/1pp4r/6Bp/2P4P/2N2Q2/RP6/2K2B1R w - - 1 1",2],["1r1qkbnr/p3pp2/Bp1p2p1/4P2p/6Q1/P1P5/1P1P1PP1/1RB1K1NR w k - 1 1",2],["1r1qkbn1/p3pp1r/Bp1p2p1/4P2R/6Q1/P1P5/1P1P1PP1/1RB1K1N1 w - - 1 1",2],["1r1qkbn1/p3pp2/1p1p2p1/4P2r/6Q1/P1P5/1P1PBPP1/1RB1K1N1 w - - 0 1",2],["6nr/prpk3p/1p4p1/1P6/2Pp1p2/Q2P4/P2KB2b/R1B1R2N w - - 4 1",2],["rnb1k3/pppp2p1/4P3/6P1/3n4/2PP3N/P1PK4/R1B2Q2 w - - 3 1",2],["rnb5/ppp1k1p1/3pP3/6P1/5Q2/1PPP4/P2K4/R1B3N1 w - - 0 1",2],["rnb1kb2/3ppp2/p6n/1p4p1/P1q2P1N/2B3K1/3PP1PP/RN1Q1B1R b q - 0 1",2],["rnb1kb2/3ppp2/p5Nn/1p6/P4p2/1qB4K/3PP1PP/RN1Q1B1R b q - 3 1",2],["rn2k1n1/2p1b3/qR2p3/6P1/3P2P1/2P1P3/P2K1P2/N2b3r b q - 0 1",2],["rn1b2n1/2p1k3/q3p3/5RP1/3P2P1/2P1P3/P1NK1P2/3b2r1 b - - 6 1",2],["1nbqkb2/r2p2p1/2pp4/p2n3p/4r3/3P3P/PPPK1PPR/RNBB4 b - - 1 1",2],["r4br1/pp4pp/nq1pbp2/7k/3PP3/1BP1B3/P4KQP/RN4NR w - - 0 1",2],["r2q1br1/pp4pp/n2pbp2/3P3k/4P3/1BP1B3/P4KQP/RN4NR w - - 1 1",2],["r2k4/2p5/1pP2ppn/p2p4/8/B5P1/P1P5/RN2QKR1 w - - 1 1",2],["r2k4/2p5/1pP2p1n/p2p2p1/8/B5P1/P1P2Q2/RN3KR1 w - - 0 1",2],["3r1B1r/1p3p1p/2k1b1pb/p1n1P3/4P3/1qP3P1/P4P1P/R3KBNR b K - 1 1",2],["2r4r/1p3pBp/2k1b1pb/p3P3/4P3/q2n2P1/P3KP1P/R4BNR b - - 7 1",2],["2r2B1r/1p3p1p/2k1b1pb/p1n1P3/4P3/q5P1/P3KP1P/R4BNR b - - 9 1",2],["rnb5/pp1k2pp/7n/4pr2/2p1P2q/PP6/1BPP3P/RN1K2NR b - - 3 1",2],["1rbq4/1ppp1k2/2n1p3/p6R/2P5/P4PQ1/1B1PP3/RN3KN1 w - - 3 1",2],["rn3bnr/1p1k3N/1qpp2Q1/p3pp2/3P3P/P3K1PB/1PP1PP2/RNB4R w - e6 0 1",3],["2R2bnr/1r1k1p2/1R4p1/3p2Pp/N2Pp3/1Q5N/4BP1P/4K3 w - - 1 1",3],["6n1/1r1kbp1r/1RR3p1/3p2P1/3Pp1p1/1Q5N/1N3P1P/4K3 w - - 2 1",3],["rnbqk1nr/1p1pb1p1/2p4p/p3p1N1/P3p3/3P3P/NBP2PPR/R2QKB2 w Qkq - 0 1",3],["r1b2bnr/p2pp3/5k1p/4nPpQ/R4P2/5N2/1PP1N1PP/2B1KB1R w K - 2 1",3],["rn2kbn1/1b1p4/pp4p1/1B3P2/Pp2Pp1q/2N5/R1PP1P1r/2B1K2R b Kq - 5 1",3],["1n3k1r/1pp2p2/3b4/2q2bp1/1P4B1/r6P/R4PP1/1NB2KNR b - - 0 1",3],["1q3kr1/4bppp/b7/1Q1Pp3/8/3P4/PB2PPPP/2R1KBNR w K - 3 1",3],["r2q3r/p1p5/2nQ2p1/1p3k2/PB2p3/5P2/2P1P2P/RN2KbR1 w Q - 0 1",3],["rnb2kn1/1p1p1pb1/p3p2r/6qR/PP1Q2p1/N1P5/R3PP2/2B1KBN1 b - - 1 1",3],["2nqk1nr/3p2p1/4P3/2p4p/2p5/1P2K1bP/r2PP1PR/2B2BN1 b k - 0 1",3],["2n3nr/3k2p1/rq6/7p/1ppP4/B3K1bP/4P1PR/5BN1 b - d3 0 1",3],["2n3nr/4k1p1/rq6/7p/1ppPK3/B5bP/4P1PR/5BN1 b - - 2 1",3],["2n3nr/4k1p1/r5q1/7p/1ppP4/B3K1bP/4P1PR/5BN1 b - - 4 1",3],["2n1k2r/6p1/r4nq1/3P3p/1Bp5/4K1bP/4P1PR/5BN1 b - - 0 1",3],["B7/5pr1/b1npp1p1/p1p1k1N1/7R/1PP2qP1/P5Q1/1NB1K3 w - - 0 1",3],["B7/5r2/b1npp1p1/2p1k3/p6R/1PP2QP1/P7/1NB1K3 w - - 0 1",3],["B7/8/b1npp1p1/2p1k3/p4r2/1PP2QP1/P7/1NB1K2R w - - 2 1",3],["7r/r7/4k2B/p7/4P3/q1N3bp/1P6/R6K b - - 1 1",3],["r1bq1kn1/1ppp2p1/p1n5/4PP2/P7/3P2K1/NPPNP2r/1R1Q1B1R b - - 1 1",3],["r1bq1kn1/2pp2p1/ppn5/4PP2/P7/1N1P2K1/NPP1P2r/1R1Q1B1R b - - 1 1",3],["2bq4/pr1kn2p/2p2r2/1p1p4/6K1/P2P3P/4BPPB/R5NR b - - 1 1",3],["2bq1r2/pr1kn2p/2p5/3p2K1/1p6/P2P3P/4BPPB/3R2NR b - - 1 1",3],["r2q3b/2p1p1r1/1pnk1pp1/1P6/2Q3P1/P1P1p1P1/2RPN3/1NB1K2R w - - 2 1",3],["r3bbr1/ppp1pnpp/2k5/3p4/P1P1B3/4PPK1/RP4PP/1NBQ2R1 w - - 0 1",3],["4kb1r/p4ppp/n4n2/3ppq2/P6P/1P3b2/3PPK2/RNr2B1R b k h3 0 1",3],["2bq1k1r/Q1P2p2/p2pp2n/n6p/2P4P/3P3B/4P3/1NBK2bR w - - 0 1",4],["8/4k2p/1N2P3/pBp2p2/8/1P2P3/2P2PP1/Q2K4 w - - 1 1",4],["8/8/1k2PQ1p/pBp2p2/8/1P2P3/2P2PP1/4K3 w - - 0 1",4],["r1bq1b1r/2p2ppp/1Bnpp3/p7/2P1k3/N6N/PP2PKPP/1R1Q1BR1 w - - 0 1",4],["r2q1b1r/1bp2ppp/2npp3/p1B5/2P1k3/N6N/PP2PKPP/1R1Q1BR1 w - - 2 1",4],["4qb2/1pp2kr1/8/p7/1nrp2P1/6P1/P3N2P/RN2K2R b KQ - 1 1",4],["rn1k1bnr/3bp1pp/pp3p2/3q2P1/Np6/N7/P1PP1P1P/R1BQK3 b Q - 0 1",4],["rnbqkr2/pp1p4/8/2b2nPp/7P/2P2K2/PP1BP1P1/RN3BNR b q - 0 1",4],["r1bqk2r/3nbp1p/p6p/P2PpP2/1PKp3P/2n5/6P1/3Q1rNR b kq - 0 1",4],["r1bqk1nr/1pp1b1pp/p7/3pK3/PP1np3/N1P5/3PP1PP/R1BQ1BNR b kq - 1 1",4],["r3kb1r/pq3p2/3p4/2n3pp/3K4/1PP1P2P/P1QP1PNP/1RB2B2 b kq - 3 1",4],["2bqkbnr/r1pnp1pp/8/p3P3/1p6/1K5N/PPPNPPPP/R4B1R b k - 1 1",4],["2bqkb1r/r1pnp1pp/7n/p3P3/1p3P2/1K4PN/PPPNP2P/4RB1R b k - 0 1",4],["2bqkb1r/r1pnpnpp/8/p3PP2/1p6/1K4PN/PPPNP2P/4RB1R b k - 0 1",4],["2bqkb1r/r1p1pnpp/1n6/p3PP2/1p6/1K4PN/PPPNP2P/1R3B1R b k - 2 1",4],["6nr/3N1p2/bpp4p/1k3p2/2r5/1P6/P3P1KP/RQ4NR w - - 8 1",4],["6nr/3N1p2/bpp4p/1k3p2/7r/PP6/4P1KP/R2Q2NR w - - 1 1",4],["5Nnr/5p2/b1p4p/1p3Q2/P7/Pk6/4P1KP/R5NR w - - 1 1",4],["rnbqk1r1/7p/Bpp1p3/3p2p1/3Pn3/PPN3bP/R1PB2PQ/5K1R b q - 2 1",4],["6r1/7r/n3k3/1Pp5/1P5P/4K3/3NP1P1/2q2B1R b - - 3 1",4],["1n1k1b1r/3pp2p/2b3p1/1pp5/2P3qP/P4P2/1PNP4/1RBK3R b - - 0 1",4],["rnb1k3/5pp1/Bpp1p2n/8/2P5/3PK3/P2NP3/R1BQq1N1 b - - 2 1",4],["B6r/2p4p/p2k4/1Q6/2P1K3/6bP/PB5P/R4NNR w - - 0 1",4],["rnb4r/3pkpQN/2p2n2/p3p3/P1P5/R2K4/1P3PPP/2B2B1R w - - 1 1",4],["r1b1QNk1/p7/n3p3/3p4/1p2P3/P7/1P3PPP/2R1KB1R w K - 1 1",4],["r1b1QNk1/p7/n3p3/8/1p2p3/P7/1P2KPPP/2R2B1R w - - 0 1",4],["r1b1QNk1/p7/n3p3/8/4p3/p7/1P2KPPP/1R3B1R w - - 0 1",4]];
-let pzOn=false,PZ=null,pzPrev="cpu",pzSeen=[],pzDiff=1,lnOn=false,LN=null,lnFilter="all",EVF=null;
+let pzOn=false,PZ=null,pzPrev="cpu",pzSeen=[],pzDiff=1,lnOn=false,LN=null,lnFilter="all",EVF=null,LNPG=0;
 const $$=q=>document.querySelectorAll(q);
 const isMate=s=>!legal(s).length&&inCheck(s,s.t);
 function attMates(s,k){for(const m of legal(s)){if(defFails(apply(s,m),k))return m}return null}
@@ -2988,14 +3033,26 @@ const LESSONS=[
  {id:"kb",p:"b",info:1,t:"Lone Bishop or Knight",sub:"A draw by insufficient material",text:"A king with only one bishop or one knight cannot checkmate. The game is drawn automatically. Keep your pawns and rooks and trade down carefully: the extra pieces are what win endgames."},
  {id:"op",p:"k",info:1,t:"The King and the opposition",sub:"Your king is a fighting piece",text:"In endgames the king is strong. Opposition means the kings stand on the same file or rank with one empty square between them and the opponent to move. The side not to move holds the opposition and pushes the other king back. It decides king and pawn endings and helps in every mate."}
 ];
+function lrLayout(){                                // phone: browsing lessons needs no board; starting one brings it back
+  document.body.classList.toggle("lrlist",!!$("t-lr")&&$("t-lr").classList.contains("on")&&!lnOn&&!pzOn);
+}
+const lnPageSize=()=>innerWidth>=1100?5:6;
+function lnPaginate(items){                          // show one page of the list; the pager moves between pages
+  const ps=lnPageSize(),n=Math.max(1,Math.ceil(items.length/ps));
+  LNPG=Math.min(Math.max(LNPG,0),n-1);
+  $("lnpg").hidden=items.length<=ps;
+  $("lnpn").textContent="Page "+(LNPG+1)+" of "+n+" · "+items.length+" total";
+  $("lnpv").disabled=LNPG===0;$("lnnx").disabled=LNPG>=n-1;
+  return items.slice(LNPG*ps,(LNPG+1)*ps);
+}
 function lnList(){
   if(lnMode!=="end"){opList();return}
   const L=$("lnl"),dn=lget("chess_learn"),real=LESSONS.filter(x=>!x.info),done=real.filter(x=>dn[x.id]).length;
   $("lnp").textContent=done+" of "+real.length+" practice lessons done";$("lnbar").style.width=(100*done/real.length)+"%";
   L.innerHTML="";
-  LESSONS.filter(x=>lnFilter==="all"||x.p===lnFilter).forEach(x=>{
+  lnPaginate(LESSONS.filter(x=>lnFilter==="all"||x.p===lnFilter)).forEach(x=>{
     const c=document.createElement("div");c.className="lc"+(x.info?" info":"")+(dn[x.id]?" ok":"");
-    c.innerHTML='<div class="lt"></div><div class="lb"><em class="tg"></em><b></b><span></span></div><button class="a sm"></button>'+(x.info?'<div class="lx" hidden></div>':"");
+    c.innerHTML='<div class="lt"></div><div class="lb"><b></b><div class="ls"><em class="tg"></em><span></span></div></div><button class="a sm"></button>'+(x.info?'<div class="lx" hidden></div>':"");
     c.querySelector(".tg").textContent=x.info?"Theory":(dn[x.id]?"Completed":"Practice");c.querySelector(".lt").textContent=GL[x.p];c.querySelector("b").textContent=x.t;c.querySelector("span").textContent=x.sub;
     const bt=c.querySelector("button");
     if(x.info){const lx=c.querySelector(".lx");lx.textContent=x.text;bt.textContent="Read";bt.onclick=()=>{lx.hidden=!lx.hidden;bt.textContent=lx.hidden?"Read":"Hide"}}
@@ -3196,10 +3253,10 @@ function opList(){
   const L=$("lnl"),dn=lget("chess_learn"),pool=OPN.filter(x=>OPGR[lnMode].includes(x.g)),done=pool.filter(x=>dn[x.id]).length,items=opItems();
   $("lnp").textContent=done+" of "+pool.length+" lines practised";$("lnbar").style.width=(100*done/pool.length)+"%";
   L.innerHTML="";
-  if(!items.length){const e=document.createElement("div");e.className="lpar";e.textContent="Nothing matches. Try another name, ECO code or move.";L.appendChild(e);return}
-  items.forEach(x=>{
+  if(!items.length){$("lnpg").hidden=true;const e=document.createElement("div");e.className="lpar";e.textContent="Nothing matches. Try another name, ECO code or move.";L.appendChild(e);return}
+  lnPaginate(items).forEach(x=>{
     const c=document.createElement("div");c.className="lc"+(dn[x.id]?" ok":"");
-    c.innerHTML='<div class="lt eco"></div><div class="lb"><em class="tg"></em><b></b><span></span></div><button class="a sm p"></button>';
+    c.innerHTML='<div class="lt eco"></div><div class="lb"><b></b><div class="ls"><em class="tg"></em><span></span></div></div><button class="a sm p"></button>';
     c.querySelector(".lt").textContent=x.eco;
     c.querySelector(".tg").textContent=OPGN[x.g]+(dn[x.id]?" · Practised":"");
     c.querySelector("b").textContent=x.name;
@@ -3210,10 +3267,10 @@ function opList(){
 }
 function opChips(){
   const c=$("opf");c.innerHTML="";
-  OPF[lnMode].forEach(([k,t])=>{const b=document.createElement("button");b.dataset.f=k;b.textContent=t;if(k===opFilter)b.className="on";b.onclick=()=>{opFilter=k;opChips();opList()};c.appendChild(b)});
+  OPF[lnMode].forEach(([k,t])=>{const b=document.createElement("button");b.dataset.f=k;b.textContent=t;if(k===opFilter)b.className="on";b.onclick=()=>{LNPG=0;opFilter=k;opChips();opList()};c.appendChild(b)});
 }
 function setLnMode(m){
-  lnMode=m;opFilter="all";opText="";$("ops").value="";
+  LNPG=0;lnMode=m;opFilter="all";opText="";$("ops").value="";
   $$("#lnmode button").forEach(b=>b.classList.toggle("on",b.dataset.m===m));
   $("lnf").hidden=m!=="end";$("opf").hidden=m==="end";$("ops").hidden=m==="end";
   $("lnT").textContent={end:"Learn endgames",op:"Learn openings",gam:"Learn gambits"}[m];
@@ -3311,7 +3368,9 @@ function opNextLine(){
   if(nx)opStart(nx.id,true);
 }
 $$("#lnmode button").forEach(b=>b.onclick=()=>setLnMode(b.dataset.m));
-$("ops").oninput=()=>{opText=$("ops").value;opList()};
+$("ops").oninput=()=>{LNPG=0;opText=$("ops").value;opList()};
+$("lnpv").onclick=()=>{LNPG--;lnList();$("lnl").scrollIntoView({block:"nearest"})};
+$("lnnx").onclick=()=>{LNPG++;lnList();$("lnl").scrollIntoView({block:"nearest"})};
 $("opb").onclick=opBack;$("opn").onclick=opStep;$("oph").onclick=opHint;$("opx2").onclick=opNextLine;
 $("opp").onclick=()=>opStart(LN.o.id,!LN.practice);$("opr").onclick=()=>opStart(LN.o.id,LN.practice);$("opq").onclick=()=>lnExit();
 function lnUi(){
@@ -3405,7 +3464,7 @@ function lnNext(){
 }
 $("pzn").onclick=pzStart;$("pzn2").onclick=pzStart;$("pzh").onclick=pzHint;$("pzv").onclick=pzSolve;$("pzx").onclick=pzExit;$("pzu").onclick=pzUndo;
 $$("#pzf button").forEach(b=>b.onclick=()=>{pzDiff=+b.dataset.d;$$("#pzf button").forEach(x=>x.classList.toggle("on",x===b))});
-$$("#lnf button").forEach(b=>b.onclick=()=>{lnFilter=b.dataset.f;$$("#lnf button").forEach(x=>x.classList.toggle("on",x===b));lnList()});
+$$("#lnf button").forEach(b=>b.onclick=()=>{LNPG=0;lnFilter=b.dataset.f;$$("#lnf button").forEach(x=>x.classList.toggle("on",x===b));lnList()});
 $("lnh").onclick=lnHint;$("lnk").onclick=lnBack;$("lnr").onclick=()=>LN&&lnStart(LN.l.id);$("lnx").onclick=lnExit;$("lnn").onclick=lnNext;
 pzTag();lnList();
 $("ng").onclick=()=>{if(NET.game){if(guard())return;showHome();return}newGame()};$("un").onclick=undo;$("md").onchange=()=>{if(liveNet()){$("md").value="online";guard();return}newGame()};
@@ -3418,6 +3477,72 @@ $("fen").oninput=()=>{const s=parseFen($("fen").value);if(s){EB=s.b.slice();$("t
 addEventListener("keydown",e=>{if(/TEXTAREA|SELECT|INPUT/.test(e.target.tagName))return;if(e.key==="ArrowLeft")go(vi-1);if(e.key==="ArrowRight")go(vi+1)});
 
 $("fl").onclick=()=>{flip=!flip;render()};
+
+/* ================= chat with your opponent in online games ================= */
+var CHAT={key:null,msgs:[],unread:0,muted:false};
+try{CHAT.muted=localStorage.getItem("chess_chat_mute")==="1"}catch(e){}
+const QUICK=["Good luck! 🍀","Nice move!","Well played","Thanks!","Good game 🤝","Oops 😅"];
+const chatShown=()=>!!NET.game;
+function chatPaint(){
+  if(!CHAT)return;
+  const el=$("chat");if(!el)return;
+  const show=chatShown();el.hidden=!show;
+  if(!show)return;
+  const live=liveNet(),opp=NET.you==="w"?NET.game.black:NET.game.white;
+  $("chs").textContent=live?"with "+opp.name:"game over";
+  $("chmu").hidden=false;$("chmu").textContent=CHAT.muted?"Unmute":"Mute";
+  $("chx").disabled=!live;$("chn").disabled=!live;
+  $("chx").placeholder=live?"Message "+opp.name+"…":"The game is over";
+  $("chh").textContent=CHAT.muted?"Opponent’s messages are muted.":"Be kind — keep it friendly.";
+  document.querySelectorAll("#chq button").forEach(b=>b.disabled=!live);
+  $("chb").hidden=!(CHAT.unread>0&&!el.open);$("chb").textContent=CHAT.unread;
+}
+function chatRender(){
+  const box=$("chl");if(!box)return;
+  box.textContent="";
+  const list=CHAT.msgs.filter(m=>m.me||!CHAT.muted);
+  if(!list.length){const d=document.createElement("div");d.className="chn";d.textContent="Say hi to your opponent 👋";box.appendChild(d);return}
+  for(const m of list){
+    const d=document.createElement("div");d.className="cm"+(m.me?" me":"");
+    if(!m.me){const b=document.createElement("b");b.textContent=m.name;d.appendChild(b)}
+    d.appendChild(document.createTextNode(m.text));       // text only, never HTML
+    box.appendChild(d);
+  }
+  box.scrollTop=box.scrollHeight;
+}
+function chatPush(m){
+  CHAT.msgs.push(m);if(CHAT.msgs.length>100)CHAT.msgs.shift();
+  const el=$("chat");
+  if(!m.me&&!CHAT.muted&&!el.open&&!el.hidden){CHAT.unread++;toast("💬 "+m.name+": "+m.text)}
+  chatRender();chatPaint();
+}
+function chatOnNew(s){                              // a new game begins: forget the old conversation
+  if(!CHAT||NET.game||s)return;
+  CHAT.key=null;CHAT.msgs=[];CHAT.unread=0;chatRender();chatPaint();
+}
+const chatMap=m=>({me:m.from===NET.you,name:m.name,text:m.text});
+function chatSetNet(snap){
+  CHAT.key="net:"+snap.id;CHAT.msgs=(snap.chat||[]).map(chatMap);CHAT.unread=0;
+  chatRender();chatPaint();
+}
+function chatMerge(snap){                            // after a reconnect: pick up anything we missed
+  if(CHAT.key!=="net:"+snap.id){chatSetNet(snap);return}
+  const had=CHAT.msgs.length,all=(snap.chat||[]).map(chatMap);
+  if(all.length>had){const fresh=all.slice(had);CHAT.msgs=all;if(!$("chat").open&&!CHAT.muted)CHAT.unread+=fresh.filter(x=>!x.me).length;chatRender();chatPaint()}
+}
+function chatIncoming(d){if(CHAT.key==="net:"+d.gameId)chatPush(chatMap(d))}
+async function chatSend(text){
+  text=String(text||"").replace(/\s+/g," ").trim().slice(0,200);
+  if(!text||!NET.game||!liveNet())return;
+  try{await api("POST","/api/game/"+NET.game.id+"/chat",{text},TOKEN)}catch(e){toast(e.message||"Message not sent")}
+}
+(function chatInit(){
+  const q=$("chq");QUICK.forEach(t=>{const b=document.createElement("button");b.type="button";b.textContent=t;b.onclick=()=>chatSend(t);q.appendChild(b)});
+  const go=()=>{const v=$("chx").value;$("chx").value="";chatSend(v)};
+  $("chn").onclick=go;$("chx").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();go()}};
+  $("chmu").onclick=()=>{CHAT.muted=!CHAT.muted;try{localStorage.setItem("chess_chat_mute",CHAT.muted?"1":"0")}catch(e){}chatRender();chatPaint()};
+  $("chat").addEventListener("toggle",()=>{if($("chat").open){CHAT.unread=0;chatPaint();$("chl").scrollTop=$("chl").scrollHeight}});
+})();
 newGame();
 
 /* ================= main menu + online multiplayer ================= */
@@ -3441,6 +3566,7 @@ async function netConnect(){
     const on=(n,f)=>es.addEventListener(n,e=>{try{f(JSON.parse(e.data))}catch(err){console.error(err)}});
     on("hello",d=>{if(d.game)netSync(d.game);NET.resolve&&NET.resolve()});
     on("matched",d=>netMatched(d.game));on("move",netMove);on("end",netEnd);
+    on("chat",d=>{if(NET.game&&d.gameId===NET.game.id)chatIncoming(d)});
     on("draw",d=>{if(NET.game&&d.gameId===NET.game.id){NET.game.drawOffer=d.from;paintOnline();toast("Your opponent offers a draw")}});
     on("drawdeclined",()=>{if(NET.game){NET.game.drawOffer=null;paintOnline();toast("Draw declined")}});
     on("opponent",d=>toast(d.state==="disconnected"?"Your opponent disconnected — they have "+(d.seconds||60)+"s to come back":"Your opponent is back"));
@@ -3458,13 +3584,13 @@ function netStart(snap){
   NET.game=snap;NET.you=snap.you;
   replayMoves(snap.moves);
   flip=snap.you==="b";setClocks(snap.clocks);
-  hideHome();hideMM();showTab("play");paintOnline();render();
+  hideHome();hideMM();showTab("play");paintOnline();render();chatSetNet(snap);
 }
 function netSync(snap){
   if(NET.game&&NET.game.id===snap.id){
     if(snap.status==="ended"&&NET.game.status==="playing")netEnd({gameId:snap.id,result:snap.result,reason:snap.reason,ratings:snap.ratings,aborted:snap.reason==="aborted"});
     else if(snap.status==="playing"&&snap.moves.length!==H.length)netStart(snap);
-    else{NET.game.drawOffer=snap.drawOffer;setClocks(snap.clocks);paintOnline()}
+    else{NET.game.drawOffer=snap.drawOffer;setClocks(snap.clocks);paintOnline();chatMerge(snap)}
     return;
   }
   if(snap.status==="playing")netStart(snap);
@@ -3852,9 +3978,10 @@ function lsbMe(){
 function lsbSnd(){$("lis").innerHTML=ic(snd?"vol":"volx");$("lis").title=snd?"Sound on":"Sound off"}
 function lsbPaint(){
   const t=document.querySelector(".tabs button.on"),tab=t?t.dataset.t:"play";
-  const cur=!$("home").hidden?"play":(["pz","lr","gm","su"].includes(tab)?tab:"play");
+  const homeOn=!$("home").hidden,cur=homeOn?"play":(["pz","lr","gm","su"].includes(tab)?tab:"play");
   document.querySelectorAll("#lsb .lsn[data-go]").forEach(b=>b.classList.toggle("on",b.dataset.go===cur));
-  document.querySelectorAll("#bnav button[data-go]").forEach(b=>b.classList.toggle("on",b.dataset.go===cur));
+  const curB=homeOn?"menu":cur;                       // bottom nav: Menu = main menu, Play = the game board
+  document.querySelectorAll("#bnav button[data-go]").forEach(b=>b.classList.toggle("on",b.dataset.go===curB));
   $("bmb").classList.toggle("on",cur==="su");
   if(cur==="gm"||cur==="su")lsbMore(true);
 }
@@ -3871,7 +3998,11 @@ document.querySelectorAll("#lsb .lsn[data-go]").forEach(b=>b.onclick=()=>LSB_GO[
 $("lgo").onclick=()=>LSB_GO.play();
 /* bottom nav (narrow screens) */
 const bmoreShow=o=>{$("bmore").hidden=!o;$("bmb").setAttribute("aria-expanded",o?"true":"false")};
-document.querySelectorAll("#bnav button[data-go]").forEach(b=>b.onclick=()=>{bmoreShow(false);LSB_GO[b.dataset.go]()});
+const BN_GO=Object.assign({},LSB_GO,{
+  menu:()=>{if($("home").hidden)showHome();else $("home").scrollTo({top:0,behavior:"smooth"})},
+  play:()=>{hideHome();showTab("play")}
+});
+document.querySelectorAll("#bnav button[data-go]").forEach(b=>b.onclick=()=>{bmoreShow(false);BN_GO[b.dataset.go]()});
 document.querySelectorAll("#bmore button[data-go]").forEach(b=>b.onclick=()=>{bmoreShow(false);LSB_GO[b.dataset.go]()});
 $("bmb").onclick=e=>{e.stopPropagation();bmoreShow($("bmore").hidden)};
 $("bmp").onclick=e=>{e.stopPropagation();bmoreShow(false);$("usr").click()};
